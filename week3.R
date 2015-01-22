@@ -44,21 +44,46 @@ summary(restData)
 str(restData)
 quantile(restData$councilDistrict, na.rm = T)
 quantile(restData$councilDistrict, probs = c(0.5, 0.75, 0.9), na.rm = T)
+
 # table does not use NAs by default
 table(restData$zipCode, useNA = "ifany")
 table(restData$councilDistrict,restData$zipCode)
+
 # check for missing data
 sum(is.na(restData$councilDistrict))
 any(is.na(restData$councilDistrict))
 all(restData$zipCode>0)
+
 # row and column sums
 colSums(is.na(restData))
 all(colSums(is.na(restData))==0)
+
 # Values with speficic characteristics
 table(restData$zipCode %in% c("21212"))
 table(restData$zipCode %in% c("21212","21213"))
 restData[restData$zipCode %in% c("21212","21213"),]
 
+# Cross tabs
+data(UCBAdmissions)
+DF = as.data.frame(UCBAdmissions)
+summary(DF)
+# one variable vs 2 others
+xt <- xtabs(Freq ~ Gender + Admit, data = DF)
+xt
+# one variable vs all others
+warpbreaks$replicate <- rep(1:9, len = 54)
+warpbreaks$replicate
+xt <- xtabs(breaks~., data = warpbreaks)
+xt
+ftable(xt) # display as flat table
+
+# Size of a dataset
+fakeData <- rnorm(1e5)
+class(fakeData)
+length(fakeData)      # length of array
+object.size(fakeData) # size in bytes
+object.size(fakeData)/length(fakeData) # how many bytes per element of array
+print(object.size(fakeData), units='Mb') # print in Mb, class/object method overwrites/extends print
 
 
 
