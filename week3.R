@@ -4,6 +4,7 @@ set.seed(13435)
 X <- data.frame("var1"=sample(1:5),"var2"=sample(6:10),"var3"=sample(11:15))
 X <- X[sample(1:5),]; X$var2[c(1,3)] <- NA
 
+
 # Subsetting
 X[,1]
 X[,"var1"]
@@ -84,6 +85,46 @@ length(fakeData)      # length of array
 object.size(fakeData) # size in bytes
 object.size(fakeData)/length(fakeData) # how many bytes per element of array
 print(object.size(fakeData), units='Mb') # print in Mb, class/object method overwrites/extends print
+
+
+# Creating new variables
+# creating sequences
+s1 <- seq(1, 10, by = 2); s1
+s2 <- seq(1, 10, length = 3); s2
+x <- c(1,3,8,25,100); seq(along = x)
+
+# subsetting variables
+restData$nearMe <- restData$neighborhood %in% c("Roland Park", "Homeland")
+table(restData$nearMe)
+names(restData)
+restData$zipWrong <- ifelse(restData$zipCode < 0, TRUE, FALSE)
+table(restData$zipWrong, restData$zipCode<0)
+
+# creating categorical variables
+restData$zipGroups <- cut(restData$zipCode, breaks = quantile(restData$zipCode))
+table(restData$zipGroups)
+table(restData$zipGroups, restData$zipCode)
+
+# easier cutting
+library(Hmisc)
+restData$zipGroups <- cut2(restData$zipCode, g=4)
+table(restData$zipGroups)
+
+# creating factor variables
+restData$zcf <- factor(restData$zipCode)
+restData$zcf[1:10]
+head(restData$zcf,n=10)
+class(restData$zcf)
+
+# levels of factor variable
+yesno <- sample(c("yes","no"),size=10,replace=TRUE)
+yesnofac <- factor(yesno,levels=c("yes","no"))
+relevel(yesnofac,ref="yes")
+as.numeric(yesnofac)
+
+#cutting produces factor variables
+
+
 
 
 
