@@ -15,6 +15,7 @@ i <- match("city", names(chicago))
 j <- match("dptp", names(chicago))
 head(chicago[, -(i:j)])
 
+
 # filter
 chic.f <- filter(chicago, pm25tmean2 > 20)
 head(select(chic.f, 1:3, pm25tmean2), 10)
