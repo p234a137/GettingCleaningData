@@ -122,10 +122,58 @@ yesnofac <- factor(yesno,levels=c("yes","no"))
 relevel(yesnofac,ref="yes")
 as.numeric(yesnofac)
 
-#cutting produces factor variables
+# using the mutate function
+library(Hmisc)
+library(plyr)
+restData2 <- mutate(restData, zipGroups=cut2(zipCode,g=4))
+table(restData2$zipGroups)
+
+# common transforms
+x<- seq(-10,10, length=15)
+abs(x)
+sqrt(abs(x))
+ceiling(x)
+floor(x)
+round(x, digits=3)
+signif(x, digits=2)
+cos(x)
+sin(x)
+log(abs(x))
+log2(abs(x))
+log10(abs(x))
+exp(x)
 
 
+# Reshaping Data
+# start with reshaping, melting data frames
+library(reshape2)
+head(mtcars)
+mtcars$carname <- rownames(mtcars)
+carMelt <- melt(mtcars, id=c("carname","gear","cyl"), measure.vars=c("mpg","hp"))
+head(carMelt, n=3)
+tail(carMelt, n=3)
 
+# casting data frames
+cylData <- dcast(carMelt, cyl ~ variable) # counts nr of measurements ("mpg" and "hp") for each cylinder, uses default function length()
+cylData
+cylData <- dcast(carMelt, cyl ~ variable, mean) # now define a function
+cylData
+
+# Averaging values
+head(InsectSprays)
+tapply(InsectSprays$count, InsectSprays$spray, sum)
+# http://www.r-bloggers.com/a-quick-primer-on-split-apply-combine-problems/
+
+# another way, split, then combine
+spIns <- split(InsectSprays$count, InsectSprays$spray)
+spIns
+sprCount <- lapply(spIns, sum)
+sprCount
+unlist(sprCount) # display results as vector
+# or simpler
+sapply(spIns, sum)
+
+# the plyr package way
 
 
 
