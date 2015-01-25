@@ -195,5 +195,12 @@ names(solutions)
 mergedData <- merge(reviews, solutions, by.x = "solution_id", by.y = "id", all = T)
 head(mergedData)
 
+# http://www.statmethods.net/management/aggregate.html
+attach(mtcars)
+aggdata <-aggregate(mtcars, by=list(cyl,vs), 
+                    FUN=mean, na.rm=TRUE)
+print(aggdata)
+detach(mtcars)
+
 
 
